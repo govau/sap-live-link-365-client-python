@@ -1,0 +1,1410 @@
+swagger: "2.0"
+info:
+  title: SAP Digital Interconnect LiveLink 365
+  version: v1.1.0
+  description: The SAP Live Link 365 is a communication platform as a service (CPaaS) that leverages robust delivery technology, SAP’s global relationships, and the power of SAP’s Cloud Platform to provide affordable, scalable, and global messaging solutions for best in class SMS management.
+  termsOfService: https://livelink.sapdigitalinterconnect.com/tos/
+  contact:
+    email: sapdigitalinterconnect@sap.com
+securityDefinitions:
+  BasicAuth:
+    type: basic
+  OAuth2:
+    type: oauth2
+    flow: application
+    description: To use this API, you need to provide your client credentials (app key and secret) from the App Keys menu in the SAP Live Link 365 Main Portal. Once you have them, pass these credentials to the OAuth token endpoint to obtain an access token.
+    tokenUrl: https://livelink.sapdigitalinterconnect.com/api/oauth/token
+    scopes:
+      livelink:api: Grants access to interface with API endpoints
+      livelink:pollData: Grants read access to poll delivery statuses and MOs
+security:
+  - OAuth2:
+      - livelink:api
+      - livelink:pollData
+x-sap-shortText: Leverage SAP Live Link 365's APIs to communicate around the globe, and to add a layer of security to your services.
+x-servers:
+  - url: https://livelink.sapdigitalinterconnect.com/api
+    description: SAP Live Link 365 APIs Endpoint
+x-sap-api-type: REST
+schemes:
+  - https
+host: livelink.sapmobileservices.com
+basePath: /api
+produces:
+  - application/json
+consumes:
+  - application/json
+definitions:
+  AccessToken:
+    type: object
+    properties:
+      access_token:
+        type: string
+        description: Access token used to receive authorization from Live Link 365 for a service.
+        example: someAccessTokenHexString
+      expires_in:
+        type: integer
+        format: int64
+        description: Access token's lifetime in milliseconds.
+        example: 300000
+      refresh_expires_in:
+        type: integer
+        format: int64
+        description: Accompanying refresh token's lifetime in milliseconds.
+        example: 900000
+      refresh_token:
+        type: string
+        description: Used to request a new token without having to provide an app key and secret again.
+        example: someRefreshTokenHexString
+      scope:
+        type: string
+        description: Specifies the services to which the token gives authorized access.
+        example: livelink:api
+      token_type:
+        type: string
+        description: The type of access token.
+        example: Bearer
+  ValidateTokenResponse:
+    type: object
+    properties:
+      messageBody:
+        type: string
+        description: Describes any errors in the validation process.
+      status:
+        type: string
+        description: Describes the validation process's success or failure.
+        example: success
+  SoftTokenValidateRequest:
+    properties:
+      accountId:
+        description: The System account that will have access to send messages through the HUB Account. This is the MFA Account ID.
+        type: string
+        example: "1221"
+      telephoneNumber:
+        description: User phone number that will receive the token password or the email address which was used for token generation.
+        type: integer
+        format: int32
+        example: 1234567890
+      oneTimePassword:
+        description: Token generated and sent to the mobile handset as an SMS (or email).
+        type: integer
+        format: int32
+        example: 7889
+  UrlAuthResponse:
+    type: object
+    properties:
+      id:
+        type: integer
+        format: int32
+        description: Unique identifier for the URL authorization.
+        example: 12031
+      message:
+        type: string
+        description: Describes any errors that occurred.
+      orderID:
+        type: string
+        description: Unique ID that identifies the specific order corresponding to the URL authorization request.
+        example: "1221"
+      status:
+        type: string
+        description: Describes the success or failure of the URL authorization.
+        example: success
+      token:
+        type: string
+        description: The authorization token that was generated from the request.
+        example: someTokenHexString
+  ValidateTokenRequest:
+    properties:
+      accountId:
+        description: The System account that will have access to send messages through the HUB Account. This is the MFA Account ID.
+        type: string
+        example: "1221"
+      telephoneNumber:
+        description: Phone number that will receive the token password or the email address which was used for token generation.
+        type: integer
+        format: int32
+        example: 1234567890
+      oneTimePassword:
+        description: Token generated and sent to the Mobile handset as an SMS (or email).
+        type: integer
+        format: int32
+        example: 8879
+  UrlAuthorizationRequest:
+    required:
+      - telephoneNumber
+      - emailAddress
+    properties:
+      accountId:
+        description: The System account that will have access to send messages through the HUB Account. This is the MFA account ID.
+        type: integer
+        format: int32
+        example: 1221
+      telephoneNumber:
+        description: The user phone number that will receive the token.
+        type: integer
+        format: int32
+        example: 1234567890
+      emailAddress:
+        description: Email address that will receive the token.
+        type: integer
+        format: int32
+        example: an.email@someDomain.com
+      messageBody:
+        description: The message that will be carried over with the token.
+        type: string
+        example: Here is the token you requested
+      characterSet:
+        description: It is the Message Character set.
+        type: string
+        enum:
+          - 8b
+          - BIG5
+          - UTF8
+          - GB2312
+          - 8859-7
+          - BIG5 and UCS2
+        example: UTF8
+      tokenLength:
+        description: Number of characters the token will contain.
+        type: integer
+        format: int32
+        minimum: 4
+        maximum: 9
+        example: 5
+      pinType:
+        description: Type of PIN. 0 for Numeric and 1 for Alphanumeric.
+        type: integer
+        format: int32
+        enum:
+          - 0
+          - 1
+        example: 0
+      timeOut:
+        description: Token's validity lifetime in seconds.
+        type: integer
+        format: int32
+        minimum: 30
+        maximum: 900
+        example: 630
+      secondarykey:
+        description: Secondary key which will be attached to the key while generating the token.
+        type: string
+        example: someSecondarySequence
+  GenerateSoftTokenByKeyRequest:
+    required:
+      - key
+    properties:
+      accountId:
+        description: The System account that will have access to send messages through the HUB Account. This is the MFA Account ID.
+        type: integer
+        format: int32
+        example: 1221
+      key:
+        description: Generic key (any string) that can be used as a recipient address.
+        type: string
+        example: "1234567890"
+      messageBody:
+        description: The message that will be carried over with the token.
+        type: string
+        example: "Here is the token you requested: "
+      characterSet:
+        description: The Message Character set.
+        type: string
+        enum:
+          - 8b
+          - BIG5
+          - UTF8
+          - GB2312
+          - 8859-7
+          - BIG5 and UCS2
+        example: UTF8
+      tokenLength:
+        description: Token's number of characters.
+        type: integer
+        format: int32
+        minimum: 4
+        maximum: 9
+        example: 5
+      pinType:
+        description: Type of PIN. 0 for Numeric and 1 for Alphanumeric.
+        type: integer
+        format: int32
+        enum:
+          - 0
+          - 1
+        example: 0
+      timeOut:
+        description: How long the generated token will be valid in seconds.
+        type: integer
+        format: int32
+        minimum: 30
+        maximum: 900
+        example: 630
+      secondarykey:
+        description: Secondary key which will be attached to the key while generating the token.
+        type: string
+        example: someSecondarySequence
+  GenerateTokenResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Message in case of error when generating token.
+      orderID:
+        type: string
+        description: Order IDs not sent in response.
+        example: "2231"
+      status:
+        type: string
+        description: Describes the token generation status.
+        example: success
+      token:
+        type: string
+        description: Token is sent to phone number.
+        example: someTokenHexString
+  GenerateSoftTokenRequest:
+    properties:
+      accountId:
+        description: The System account that will have access to send messages through the HUB Account. This is the MFA Account ID.
+        type: integer
+        format: int32
+        example: 1221
+      telephoneNumber:
+        description: The user phone number that will receive the token.
+        type: integer
+        format: int32
+        example: 1234567890
+      messageBody:
+        description: The message that will be carried over with the token.
+        type: string
+        example: Here is the token you requested
+      characterSet:
+        description: It is the Message Character set.
+        type: string
+        enum:
+          - 8b
+          - BIG5
+          - UTF8
+          - GB2312
+          - 8859-7
+          - BIG5 and UCS2
+        example: UTF8
+      tokenLength:
+        description: Length of characters from Minimum 4 to a Maximum of 9.
+        type: integer
+        format: int32
+        minimum: 4
+        maximum: 9
+        example: 5
+      pinType:
+        description: Type of PIN. 0 for Numeric and 1 for Alphanumeric.
+        type: integer
+        format: int32
+        enum:
+          - 0
+          - 1
+        example: 0
+      timeOut:
+        description:
+          "How long the generated token will be valid in seconds. Minimum
+          of 30 to a Maximum of 900. For Example: 300"
+        type: integer
+        format: int32
+        minimum: 30
+        maximum: 900
+        example: 630
+  ValidateSoftTokenRequest:
+    required:
+      - clientId
+      - userId
+      - secretKey
+    properties:
+      clientId:
+        description: The System account that will have access to send messages through the HUB Account. This is the MFA Account ID.
+        type: integer
+        format: int64
+        example: 12221
+      userId:
+        description: Could be a phone number, an email, or a name.
+        type: string
+        example: your.address@someDomain.com
+      secretKey:
+        description: Key generated by Google authenticator. To generate this secret key , you can either scan the QR code which you get in the response for register token or generate it from the soft token.
+        type: integer
+        format: int32
+        example: 7867
+  MfaSoftToken:
+    type: object
+    properties:
+      clientId:
+        type: integer
+        format: int64
+        example: 23
+        description: Unique ID for the registered token.
+      clientName:
+        type: string
+        example: Some Name
+        description: Name associated to the registered client.
+      message:
+        type: string
+        description: Describes the registration's success or failure.
+        example: The user was registered successfully
+      secretKey:
+        type: integer
+        format: int32
+        description: Secret key associated to the requested token.
+        example: 0
+      softToken:
+        type: string
+        description: The requested soft token in hexadecimal format.
+        example: THisISsOmeToken
+      softTokenQRCode:
+        type: string
+        description: URL for the QR code generated for the soft token.
+        example: https://somePlace.url/someImage.png
+      success:
+        type: boolean
+        description: Value is 'true' if registration and token generation are succesful; false, otherwise.
+        example: true
+      userId:
+        type: string
+        description: The ID that was used to register the user and generate the token.
+        example: your.user@someDomain.com
+  MfaSoftTokenValidateResponse:
+    type: object
+    properties:
+      message:
+        type: string
+        description: Describes any errors that occured while validating the token.
+      success:
+        type: boolean
+        description: "'true' if soft token still valid; 'false', otherwise."
+        example: true
+  DestOrderId:
+    type: object
+    properties:
+      destination:
+        type: array
+        items:
+          type: string
+        description: Array of numbers that received the message
+        example:
+          - "1234567890"
+          - "0987654321"
+      livelinkOrderId:
+        type: array
+        items:
+          type: string
+        description: Array of Live Link IDs identifying each of the requests made to send the message. More than one if SMS splitting occurred
+        example:
+          - "87654321"
+          - "12345678"
+  PollStatus:
+    type: object
+    properties:
+      finalStatusIndicator:
+        type: string
+        description: Code that indicates the final delivery status of the sent message.
+        example: DB682
+      internalStatusId:
+        type: string
+        description: Unique identifier for the status the message went through in intermediate steps before final delivery.
+        example: ABC
+      messageBody:
+        type: string
+        description: Body of the message that was sent as the SMS's content.
+      operatorId:
+        type: integer
+        format: int32
+        description: Unique identifier for the operator that sent the message.
+        example: 1231
+      orderId:
+        type: string
+        description: Unique identifier for the order generated in response to the send-SMS request.
+        example: "1221"
+      recipient:
+        type: string
+        description: Phone number that received the message.
+        example: "1234567890"
+      status:
+        type: string
+        description: Describes the state that the message went through while it was being sent.
+        enum:
+          - SENT
+          - DELIVERED
+          - RECEIVED
+        example: RECEIVED
+      timestamp:
+        type: string
+        format: date-time
+        description: Marks the point in time that the message went through the status described in this object.
+        example: "2018-01-07T23:54:40.192"
+  PollStatusResponse:
+    type: object
+    properties:
+      clientId:
+        type: string
+        description: Represents the Client Account.
+        example: "3"
+      pageCount:
+        type: integer
+        format: int32
+        description: Total number of available pages.
+        example: 10
+      pageIndex:
+        type: integer
+        format: int32
+        description: Page number from which the ACKs are fetched.
+        example: 2
+      sapnotification:
+        type: array
+        items:
+          $ref: "#/definitions/PollStatus"
+        description: Array of objects describing the statuses the sent messages went through.
+        example:
+          - orderId: "1702926297"
+            recipient: "+50494404140"
+            timestamp: "2019-01-07T23:54:40.192"
+            status: DELIVERED
+            messageBody: Message 1 of the order 1702926297 at destination of +50494404140 has been sent at 21:54:15 (GMT) on the 07-01-2019.
+  LiveLinkResponse:
+    type: object
+    properties:
+      apiErrorCode:
+        type: integer
+        format: int32
+        description: Internal error code, present only if error occurs.
+        example: 123
+      debugMessage:
+        type: string
+        description: Debug message describing the problem, present only if error occurs.
+        example: Token does not match account credentials
+      docUrl:
+        type: string
+        description: Unique locator for the doc generated in relation to the request.
+      httpStatusCode:
+        type: string
+        description: HTTP status code returned by API Gateway.
+        example: 200 OK
+      livelinkOrderIds:
+        type: array
+        description: List of all mobile numbers to which message is sent along with list of all order IDs when sent data is processed successfully.
+        items:
+          $ref: "#/definitions/DestOrderId"
+        example:
+          - destination:
+              - "+1234567890"
+            livelinkOrderId:
+              - "1234567890"
+      userMessage:
+        type: string
+        description: The error message describing the problem, present only if error occurs.
+        example: The message could not be delivered successfully
+  SmsProperties:
+    type: object
+    properties:
+      accountId:
+        type: string
+        description: ID for the associated account
+        example: "123"
+      codeTac:
+        type: integer
+        format: int32
+        description: Optional, region-dependent parameter.
+        example: 23
+      contentTextEncoding:
+        type: string
+        description: Encoding used for the message's text
+        enum:
+          - UTF8
+          - UCS2
+        default: UTF8
+      countryCode:
+        type: string
+        description: Country code from where message was sent.
+        example: GB
+      curTime:
+        type: string
+        format: date-time
+        description: Time when message was received
+        example: "2019-01-07 23:54:40"
+      imodeStatus:
+        type: integer
+        format: int32
+        description: Optional, region-dependent parameter.
+        example: 23
+      indexNber:
+        type: integer
+        format: int32
+        description: Optional, region-dependent paramter.
+        example: 1
+      keyword:
+        type: string
+        description: Word contained within message that was sought for in request to poll MOs.
+        example: hello
+      messageClass:
+        type: string
+        description: |-
+          The short message's received type.
+          0 = Immediate display (flash)
+          1 = Handset Specific (Live Link Default)
+          2 = SIM Specific
+          3 = TE Specific.
+        enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        example: "3"
+      mmsStatus:
+        type: integer
+        format: int32
+        description: Optional, region-dependent parameter.
+        example: 12345
+      operatorCodeMCC:
+        type: string
+        description: The Mobile Country Code of the operator in decimal format.
+        example: "123"
+      operatorCodeMNC:
+        type: string
+        description: The Mobile Network Code of the operator in decimal format.
+        example: "002"
+      operatorId:
+        type: string
+        description: Unique identifier for the operator that sent the message.
+        example: "12"
+      operatorNetwork:
+        type: string
+        description: The Operator Network that sent the received message.
+        example: GSM
+      parentalStatus:
+        type: string
+        description: Optional, region-dependent paramenter.
+        example: 18+=+
+      receivedServiceNumber:
+        type: string
+        description: Service number sent by the mobile operator.
+        example: "1231"
+      receivedTime:
+        type: string
+        description: Time when message was received. Date portion is separated from time portion by a single space.
+        example: "2017-11-11 11:11:11.111"
+      serviceId:
+        type: integer
+        format: int32
+      sessionId:
+        type: string
+        description: Unique identifier for the session that was lifted to receive the MO.
+        example: "132"
+      tacCode:
+        type: string
+        description: The TAC code (Type Allocation Code) is used to identify the handset's terminal type.
+        example: "12"
+      timezone:
+        type: string
+        description: Time zone from which the message was received.
+        example: GMT
+      totalIndex:
+        type: integer
+        format: int32
+        description: Optional, region-dependent paramenter.
+        example: 3
+  PollMo:
+    type: object
+    properties:
+      contentText:
+        type: string
+        description: Text sent by the mobile subscriber.
+        example: Content of message.
+      parameters:
+        $ref: "#/definitions/SmsProperties"
+      recipient:
+        type: string
+        description: Short code or service number dedicated to Enterprise account.
+        example: "1234"
+      sender:
+        type: string
+        description: Phone number of the SMS originator in international format. It is prefixed by 'tel:' always in MOs.
+        example: tel:+1234567890
+  PollMoResponse:
+    type: object
+    properties:
+      pageCount:
+        type: integer
+        format: int32
+        description: Total number of available pages.
+        example: 10
+      pageIndex:
+        type: integer
+        format: int32
+        description: Page number from which the MOs are fetched.
+        example: 1
+      sapnotification:
+        type: array
+        items:
+          $ref: "#/definitions/PollMo"
+  SmsRequestV2:
+    type: object
+    required:
+      - destination
+      - message
+    properties:
+      ackCountryCode:
+        type: boolean
+        description: Set to true to receive Country Codes in ACKs.
+        default: false
+      ackDeliveredTime:
+        type: boolean
+        description: Set to true to receive ACK delivery times.
+        default: false
+      ackFinalOnly:
+        type: boolean
+        default: false
+        description: Set to true to receive only ACKs that have Final Status. Non-final ACKs will be ignored
+      ackFinalStatus:
+        type: boolean
+        default: false
+        description: Set to true to receive Final Status Indicators in ACKs.
+      ackInternalStatus:
+        type: boolean
+        default: false
+        description: Set to true to receive Internal Status Codes in ACKs.
+      ackMTReceivedTime:
+        type: boolean
+        default: false
+        description: Set to true to receive MailSubmitTime in ACKs.
+      ackOperatorId:
+        type: boolean
+        default: false
+        description: Set to true to receive Operator IDs in ACKs.
+      ackTimeInGMT:
+        type: boolean
+        default: true
+        description: Set to true to receive GMT time in ACKs.
+      ackTpoa:
+        type: boolean
+        default: false
+        description: Set to 'true' to receive TPOA in ACKs.
+      ackType:
+        type: string
+        description: Level of notification SAP will send back.
+        enum:
+          - NONE
+          - ORDER
+          - MESSAGE
+        example: ORDER
+      acknowledgement:
+        type: boolean
+        default: false
+        description: Set to true if you want to receive ACKs.
+      callback:
+        type: string
+        description: Callback URL which will receive ACKs.
+        example: https://server.to-receive-acks.com/endpoint-to-receive-them
+      clientId:
+        type: integer
+        format: int32
+        example: 12345
+      contentTextEncoding:
+        type: string
+        description: Specifies the short message's text encoding.
+        enum:
+          - UTF8
+          - UCS2
+        default: UTF8
+      destination:
+        type: array
+        description: Array of numbers that will receive the message.
+        items:
+          type: string
+        example:
+          - "+919172314889"
+          - "+918454835133"
+      message:
+        type: string
+        description: Message body for the SMS.
+        example: Hello World!!
+      messageClass:
+        type: string
+        description: |-
+          Specifies the message class. Message class is an operator dependent feature.
+
+          For example:
+          0 = Immediate display (flash)
+          1 = Handset Specific (Live Link Default)
+          2 = SIM Specific
+          3 = TE Specific.
+        enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        default: "1"
+      mobileNotification:
+        type: string
+        enum:
+          - "YES"
+          - "NO"
+      operatorId:
+        type: integer
+        format: int32
+        description: Used to specify the destination operators for the message.
+        example: 61
+      origin:
+        type: string
+        description: Live Link number from which message will be sent.
+        example: "12345"
+      pId:
+        type: string
+        description: When a special value is needed, it is possible to define this value inside the request by giving the hexadecimal code of the PID desired.
+        example: 2A
+      randomId:
+        type: integer
+        format: int64
+      sessionId:
+        type: string
+        description: This is needed for session tracking, US campaign tracking, or other purposes. When supported by an operator, you may receive information in the SESSION_ID field of an incoming MO request. Upon receiving such information, you are expected to post it back into the SESSION_ID field of the MT reply.
+        example: <facebook>test</facebook>
+      subject:
+        type: string
+        description: This field can be useful to set your own unique ID which will be returned in notifications and will ease tracking of messages statuses.
+        example: ABC
+      validityPeriod:
+        type: string
+        description: Tells how long SAP tries to send the message.The time can be specified in weeks, days, hours or minutes.
+        example: 1w
+    description: This class carries all information related to a SMS request.
+  SmsRequest:
+    type: object
+    required:
+      - destination
+      - body
+    properties:
+      clientId:
+        description: Represents the client account.
+        type: integer
+        format: int32
+        example: 67
+      body:
+        description: The Message body for the SMS.
+        type: string
+        example: Hello world!!
+      channel:
+        description: |-
+          Channel through which message will be delivered.
+          This value should be: "SMS".
+        type: string
+        default: SMS
+      origin:
+        description: Live Link number from which message will be sent.
+        type: string
+        example: "12345"
+      destination:
+        description: An array of destination numbers that will receive the message.
+        type: array
+        items:
+          type: string
+        example:
+          - "+919172314889"
+          - "+918454835133"
+      ackType:
+        description: Level of notification SAP will send back.
+        type: string
+        enum:
+          - ORDER
+          - MESSAGE
+          - NONE
+        default: ORDER
+      validityPeriod:
+        description: Time frame within which SAP will try to send the message. The time can be specified in weeks, days, hours or minutes.
+        type: string
+        example: 1w
+      sessionId:
+        type: string
+        description: It is needed for US campaign tracking.
+        example: <facebook>test</facebook>
+      contentTextEncoding:
+        description: Specifies the message's text encoding.
+        type: string
+        enum:
+          - 8b
+          - BIG5
+          - UTF8
+          - GB2312
+          - 8859-7
+          - UCS2
+        example: UTF8
+      subject:
+        description: Sets the message's subject. The subject will be returned in notifications and will ease tracking of message statuses.
+        type: string
+        example: ABC
+      mobileNotification:
+        description: A Mobile Notification is an operator-dependent feature.
+        type: string
+        enum:
+          - "YES"
+          - "NO"
+      operatorId:
+        description: Used to specify the destination operators for the message.
+        type: string
+      messageClass:
+        description: |-
+          Used to specify the message class. Message class is an operator-dependent feature.
+
+          For example:
+          0 = Immediate display (flash)
+          1 = Handset Specific (LiveLink Default)
+          2 = SIM Specific
+          3 = TE Specific.
+        type: string
+        enum:
+          - "0"
+          - "1"
+          - "2"
+          - "3"
+        example: "1"
+      pId:
+        description:
+          " When a special value is needed, give the hexadecimal PID code
+          you wish the request to carry."
+        type: string
+        example: 2A
+      ackFlags:
+        description: Represents various types of acknowledgements.
+        type: string
+        example: "{ackOperatorId: true, ackInternalStatus: true}"
+  EmailRequest:
+    type: object
+    properties:
+      from:
+        description: The email sender.
+        type: string
+        example: test@sapdigitalinterconnect.com
+      senderName:
+        description: Displays the name of the sender.
+        type: string
+        example: SAP Mobile
+      to:
+        description: Array of one or more entity/email IDs that will receive message.
+        type: array
+        items:
+          type: string
+        example:
+          - your_email@nomail.com
+          - other_mail@nomail.com
+      subject:
+        description: The email's subject.
+        type: string
+        example: SAP Mobile Subject
+      message:
+        description: The email's body.
+        type: string
+        example: SAP Mobile Test Message
+      replyTo:
+        description: Email where you would like to receive replies to the message that will be sent.
+        type: string
+        example: replies@yourDomain.com
+  EmailChannelResponse:
+    type: object
+    properties:
+      errorMessage:
+        type: string
+        description: Describes the error that occurred while sending the email.
+        example:
+          "SAP Notification Service API retrieve an error response. (Error
+          : Invalid sender...) ..."
+      externalOrderId:
+        type: array
+        items:
+          type: string
+        description: Array of order IDs used to identify requests made to the Email Channel.
+      successfully:
+        type: boolean
+        description: Value will be 'true' if message was sent successfully; 'false', otherwise
+  SoftTokenRequest:
+    properties:
+      clientId:
+        description: The System account that will have access to send messages through the HUB Account. This is the MFA Account ID
+        type: integer
+        format: int64
+        example: 1221
+      userId:
+        description: It could be a telephone number, an email, or a name
+        type: string
+        example: an.email@someDomain.com
+tags:
+  - name: SMS v. 2.0
+    description: SAP Digital Interconnect LiveLink 365 SMS API 2
+    externalDocs:
+      description: Find out more about the LiveLink SMS API
+      url: https://livelink.sapdigitalinterconnect.com/documentation/#/integrate/apiReferences
+  - name: SMS v. 1.0
+    description: SAP Digital Interconnect LiveLink 365 SMS API 1
+    externalDocs:
+      description: Find out more about the LiveLink SMS API
+      url: https://livelink.sapdigitalinterconnect.com/documentation/#/integrate/apiReferences
+  - name: Email
+    description: SAP Digital Interconnect LiveLink 365 Email API
+    externalDocs:
+      description: Find out more about the LiveLink email API
+      url: https://livelink.sapdigitalinterconnect.com/documentation/#/integrate/apiReferences
+  - name: MFA
+    description: SAP Digital Interconnect LiveLink 365 Multi-Factor  Authentication API
+    externalDocs:
+      description: Find out more about MFA API
+      url: https://authentication.sapdigitalinterconnect.com/
+  - name: Authorization
+    description: SAP Digital Interconnect LiveLink 365 Authorization Endpoints
+    externalDocs:
+      description: Find out more about OAuth API
+      url: https://www.oauth.com/
+paths:
+  /v2/sms:
+    post:
+      tags:
+        - SMS v. 2.0
+      summary: Send SMS message
+      description: Send an MT (Mobile Terminated) SMS message to one or more handset devices specified as recipients.
+      operationId: sendSmsUsingPOST
+      parameters:
+        - in: body
+          name: body
+          description: |-
+            This is a JSON object with parameters used for SMS sending.
+            Please find a detailed explaination for the fields in the <b>Model</b> section
+          required: true
+          schema:
+            $ref: "#/definitions/SmsRequestV2"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/LiveLinkResponse"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /v2/sms/status:
+    get:
+      tags:
+        - SMS v. 2.0
+      summary: Poll SMS delivery statuses
+      description: Pull historical data on MT (Mobile Terminated) message delivery statuses from messages that were sent within a specific time frame.
+      operationId: queryStatusUsingGET_1
+      parameters:
+        - name: startUTCTime
+          in: query
+          description: |-
+            UTC time in 'yyyyMMddHHmm' format
+            Example: 201709011230
+          required: true
+          type: integer
+          format: int32
+        - name: endUTCTime
+          in: query
+          description: |-
+            UTC time in 'yyyyMMddHHmm' format
+            Example: 201709020130
+          required: true
+          type: integer
+          format: int32
+        - name: pageIndex
+          in: query
+          description: |-
+            Response to status query is paginated. Each page has a size of 10, meaning it holds the details of 10 ACKs. The pageIndex is the page number from which ACKs are to be fetched. It can be an integer between 1 and n, where n is the number of pages available.
+
+            For example: Suppose the status query returns 68 ACKs. There will be 7 pages available. pageIndex in this case can be from 1 to 7
+          required: true
+          type: integer
+          default: 1
+          minimum: 1
+          format: int32
+        - name: status
+          in: query
+          description: |-
+            Status of the messages to be fetched.
+
+            Value meanings:
+            'all' - All Acks are fetched
+            'nok' - all errors are fetched
+            'SENT' - all ACKs with status as 'SENT' are fetched
+            'DELIVERED' -  all ACKs with status as 'DELIVERED' are fetched
+            'RECEIVED' - all ACKs with status as 'RECEIVED' are fetched
+          required: false
+          type: string
+          default: all
+          enum:
+            - all
+            - nok
+            - SENT
+            - DELIVERED
+            - RECEIVED
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/PollStatusResponse"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /v2/sms/mo:
+    get:
+      tags:
+        - SMS v. 2.0
+      summary: Poll MO (Mobile Originated) Responses
+      description: Pull historical data on MO (Mobile Originated) incoming replies that were received within a specific time frame.
+      operationId: queryMOUsingGET_1
+      parameters:
+        - name: startUTCTime
+          in: query
+          description: |-
+            UTC time in 'yyyyMMddHHmm' format
+            Example: 201709011230
+          required: true
+          type: integer
+          format: int32
+        - name: endUTCTime
+          in: query
+          description: |-
+            UTC time in 'yyyyMMddHHmm' format
+            Example: 201709020130
+          required: true
+          type: integer
+          format: int32
+        - name: pageIndex
+          in: query
+          description: |-
+            Response to MO query is paginated. Each page has a size of 10, meaning it holds the details of 10 MOs. The pageIndex is the page number from which MOs are to be fetched. It can be an integer between 1 and n, where n is the number of pages available.
+
+            For example: Suppose the MO query returns 45 MOs. There will be 5 pages available. pageIndex in this case can be from 1 to 5.
+          required: true
+          type: integer
+          default: 1
+          minimum: 1
+          format: int32
+        - name: keyword
+          in: query
+          description: |-
+            Keyword is the word to match in the MO message's body. The check is case-insensitive.
+            For example, if keyword is 'STOP', all MOs that contain STOP in their content body will be fetched.
+          required: false
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/PollMoResponse"
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /messages:
+    post:
+      tags:
+        - SMS v. 1.0
+      summary: Send SMS message
+      description: Send an SMS message to one or more mobile devices specified as recipients.
+      operationId: receiveSmsUsingPOST_2
+      parameters:
+        - in: body
+          name: body
+          required: true
+          description: The SMS Request that will be sent to the API
+          schema:
+            $ref: "#/definitions/SmsRequest"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/SmsRequest"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /email/send:
+    post:
+      tags:
+        - Email
+      summary: Send email message
+      description: Send an email message to one or more email addresses specified as recipients.
+      operationId: sendEmailUsingPOST_1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/EmailRequest"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/EmailChannelResponse"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /softTokens/register:
+    post:
+      tags:
+        - MFA
+      summary: Register user and return soft token
+      description: Register a user and generate a soft token for that user which can be used in token generator apps
+      operationId: registerSoftTokenUsingPOST_1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/SoftTokenRequest"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/MfaSoftToken"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /softTokens/deactivate:
+    post:
+      tags:
+        - MFA
+      summary: Deactivate soft token
+      description: Deactivates soft token for account
+      operationId: deactivateSoftTokenUsingPOST_1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/SoftTokenRequest"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/MfaSoftTokenValidateResponse"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /softTokens/validate:
+    post:
+      tags:
+        - MFA
+      summary: Validate soft token
+      description: Checks the validity of a soft token for a given user.
+      operationId: validateSoftTokenUsingPOST_1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/ValidateSoftTokenRequest"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/MfaSoftTokenValidateResponse"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /tokens/generate:
+    post:
+      tags:
+        - MFA
+      summary: Generates a token
+      description: Generates a soft token to be used with a token generator app such as Google Authenticator. Token will be sent to given phone number.
+      operationId: generateTokenUsingPOST_1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/GenerateSoftTokenRequest"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/GenerateTokenResponse"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /tokens/generateByKey:
+    post:
+      tags:
+        - MFA
+      summary: Generate token by key
+      description: Generate a token associated to a specific key.
+      operationId: generateTokenByKeyUsingPOST_1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/GenerateSoftTokenByKeyRequest"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/GenerateTokenResponse"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /tokens/urlAuthorization:
+    post:
+      tags:
+        - MFA
+      summary: urlAuthorization
+      description: Generate a URL authorization link that will be used as a second authentication mechanism.
+      operationId: urlAuthorizationUsingPOST_1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/UrlAuthorizationRequest"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/UrlAuthResponse"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /tokens/validate:
+    post:
+      tags:
+        - MFA
+      summary: Validates a token
+      description: Validates the token received as a parameter, verifying that it is still valid.
+      operationId: validateTokenUsingPOST_1
+      parameters:
+        - in: body
+          name: body
+          required: true
+          schema:
+            $ref: "#/definitions/SoftTokenValidateRequest"
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/ValidateTokenResponse"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /oauth/token:
+    post:
+      security:
+        - BasicAuth: []
+      tags:
+        - Authorization
+      summary: Request Authorization
+      description: Returns an OAuth2 bearer token in exchange for the client credentials provided as parameters.
+      operationId: tokenAuthorizationUsingPOST_1
+      consumes:
+        - application/x-www-form-urlencoded
+      parameters:
+        - in: formData
+          name: grant_type
+          description: The grant type should be **client_credentials** to receive an access token. This access token is valid for 45 minutes. The grant type can be 'refresh_token' in subsequent API calls in order to refresh the access token before it expires.
+          required: true
+          type: string
+        - in: formData
+          name: refresh_token
+          description: |-
+            Refresh token that was received along with the access token in response to a previous request to this endpoint. The refresh token is valid for 60 minutes.
+            It can be used in subsequent requests to this endpoint, along with **'grant_type' set as 'refresh_token'**, to get a new access token (after the previous token's 45-minute lifetime is over) without having to provide client credentials again.
+          type: string
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: "#/definitions/AccessToken"
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+  /oauth/token/validate:
+    post:
+      security: []
+      tags:
+        - Authorization
+      summary: Validate Authorization
+      description: Determines whether the token given as parameter is still valid for authorization.
+      operationId: validateUsingPOST_1
+      parameters:
+        - in: body
+          name: access_token
+          description: The token to be validated
+          required: true
+          schema:
+            type: string
+            example: someBearerTokenHexString
+      responses:
+        "200":
+          description: OK
+        "201":
+          description: Created
+        "401":
+          description: Unauthorized
+        "403":
+          description: Forbidden
+        "404":
+          description: Not Found
+externalDocs:
+  description: Find out more about SAP Digital Interconnect LiveLink 365 API
+  url: https://livelink.sapdigitalinterconnect.com/documentation/
