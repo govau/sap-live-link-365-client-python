@@ -456,7 +456,7 @@ definitions:
         format: int32
         description: Page number from which the ACKs are fetched.
         example: 2
-      sapnotification:
+      SAPNotification:
         type: array
         items:
           $ref: "#/definitions/PollStatus"

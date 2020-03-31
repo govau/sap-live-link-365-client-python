@@ -1,9 +1,13 @@
 GIT ?= git
+NPM ?= npm
 NPX ?= npx
 
 GIT_REMOTE := $(shell $(GIT) remote get-url origin)
 GIT_USER_ID := govau
 GIT_REPO_ID := $(shell basename $(GIT_REMOTE) .git)
+
+install:
+	$(NPM) install
 
 generate: swagger.yaml
 	$(NPX) openapi-generator generate \
@@ -14,4 +18,4 @@ generate: swagger.yaml
 		--additional-properties=packageName=saplivelink365
 
 .PHONY:
-	generate
+	install generate

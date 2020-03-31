@@ -37,17 +37,17 @@ class PollStatusResponse(object):
         'client_id': 'str',
         'page_count': 'int',
         'page_index': 'int',
-        'sapnotification': 'list[PollStatus]'
+        'sap_notification': 'list[PollStatus]'
     }
 
     attribute_map = {
         'client_id': 'clientId',
         'page_count': 'pageCount',
         'page_index': 'pageIndex',
-        'sapnotification': 'sapnotification'
+        'sap_notification': 'SAPNotification'
     }
 
-    def __init__(self, client_id=None, page_count=None, page_index=None, sapnotification=None, local_vars_configuration=None):  # noqa: E501
+    def __init__(self, client_id=None, page_count=None, page_index=None, sap_notification=None, local_vars_configuration=None):  # noqa: E501
         """PollStatusResponse - a model defined in OpenAPI"""  # noqa: E501
         if local_vars_configuration is None:
             local_vars_configuration = Configuration()
@@ -56,7 +56,7 @@ class PollStatusResponse(object):
         self._client_id = None
         self._page_count = None
         self._page_index = None
-        self._sapnotification = None
+        self._sap_notification = None
         self.discriminator = None
 
         if client_id is not None:
@@ -65,8 +65,8 @@ class PollStatusResponse(object):
             self.page_count = page_count
         if page_index is not None:
             self.page_index = page_index
-        if sapnotification is not None:
-            self.sapnotification = sapnotification
+        if sap_notification is not None:
+            self.sap_notification = sap_notification
 
     @property
     def client_id(self):
@@ -138,27 +138,27 @@ class PollStatusResponse(object):
         self._page_index = page_index
 
     @property
-    def sapnotification(self):
-        """Gets the sapnotification of this PollStatusResponse.  # noqa: E501
+    def sap_notification(self):
+        """Gets the sap_notification of this PollStatusResponse.  # noqa: E501
 
         Array of objects describing the statuses the sent messages went through.  # noqa: E501
 
-        :return: The sapnotification of this PollStatusResponse.  # noqa: E501
+        :return: The sap_notification of this PollStatusResponse.  # noqa: E501
         :rtype: list[PollStatus]
         """
-        return self._sapnotification
+        return self._sap_notification
 
-    @sapnotification.setter
-    def sapnotification(self, sapnotification):
-        """Sets the sapnotification of this PollStatusResponse.
+    @sap_notification.setter
+    def sap_notification(self, sap_notification):
+        """Sets the sap_notification of this PollStatusResponse.
 
         Array of objects describing the statuses the sent messages went through.  # noqa: E501
 
-        :param sapnotification: The sapnotification of this PollStatusResponse.  # noqa: E501
+        :param sap_notification: The sap_notification of this PollStatusResponse.  # noqa: E501
         :type: list[PollStatus]
         """
 
-        self._sapnotification = sapnotification
+        self._sap_notification = sap_notification
 
     def to_dict(self):
         """Returns the model properties as a dict"""
