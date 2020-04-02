@@ -79,7 +79,7 @@ Name | Type | Description  | Notes
 [[Back to top]](#) [[Back to API list]](../README.md#documentation-for-api-endpoints) [[Back to Model list]](../README.md#documentation-for-models) [[Back to README]](../README.md)
 
 # **query_status_using_get1**
-> PollStatusResponse query_status_using_get1(start_utc_time, end_utc_time, page_index, status=status)
+> PollStatusResponse query_status_using_get1(start_utc_time, end_utc_time, page_index, order_id=order_id, status=status)
 
 Poll SMS delivery statuses
 
@@ -105,11 +105,12 @@ api_instance = saplivelink365.SMSV20Api(saplivelink365.ApiClient(configuration))
 start_utc_time = 56 # int | UTC time in 'yyyyMMddHHmm' format Example: 201709011230
 end_utc_time = 56 # int | UTC time in 'yyyyMMddHHmm' format Example: 201709020130
 page_index = 1 # int | Response to status query is paginated. Each page has a size of 10, meaning it holds the details of 10 ACKs. The pageIndex is the page number from which ACKs are to be fetched. It can be an integer between 1 and n, where n is the number of pages available.  For example: Suppose the status query returns 68 ACKs. There will be 7 pages available. pageIndex in this case can be from 1 to 7 (default to 1)
+order_id = 'order_id_example' # str | Unique identifier for the order generated in response to the send-SMS request. Example: 1702926297 (optional)
 status = 'all' # str | Status of the messages to be fetched.  Value meanings: 'all' - All Acks are fetched 'nok' - all errors are fetched 'SENT' - all ACKs with status as 'SENT' are fetched 'DELIVERED' -  all ACKs with status as 'DELIVERED' are fetched 'RECEIVED' - all ACKs with status as 'RECEIVED' are fetched (optional) (default to 'all')
 
 try:
     # Poll SMS delivery statuses
-    api_response = api_instance.query_status_using_get1(start_utc_time, end_utc_time, page_index, status=status)
+    api_response = api_instance.query_status_using_get1(start_utc_time, end_utc_time, page_index, order_id=order_id, status=status)
     pprint(api_response)
 except ApiException as e:
     print("Exception when calling SMSV20Api->query_status_using_get1: %s\n" % e)
@@ -122,6 +123,7 @@ Name | Type | Description  | Notes
  **start_utc_time** | **int**| UTC time in &#39;yyyyMMddHHmm&#39; format Example: 201709011230 | 
  **end_utc_time** | **int**| UTC time in &#39;yyyyMMddHHmm&#39; format Example: 201709020130 | 
  **page_index** | **int**| Response to status query is paginated. Each page has a size of 10, meaning it holds the details of 10 ACKs. The pageIndex is the page number from which ACKs are to be fetched. It can be an integer between 1 and n, where n is the number of pages available.  For example: Suppose the status query returns 68 ACKs. There will be 7 pages available. pageIndex in this case can be from 1 to 7 | [default to 1]
+ **order_id** | **str**| Unique identifier for the order generated in response to the send-SMS request. Example: 1702926297 | [optional] 
  **status** | **str**| Status of the messages to be fetched.  Value meanings: &#39;all&#39; - All Acks are fetched &#39;nok&#39; - all errors are fetched &#39;SENT&#39; - all ACKs with status as &#39;SENT&#39; are fetched &#39;DELIVERED&#39; -  all ACKs with status as &#39;DELIVERED&#39; are fetched &#39;RECEIVED&#39; - all ACKs with status as &#39;RECEIVED&#39; are fetched | [optional] [default to &#39;all&#39;]
 
 ### Return type

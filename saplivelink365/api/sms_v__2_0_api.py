@@ -180,6 +180,7 @@ class SMSV20Api(object):
         :param int start_utc_time: UTC time in 'yyyyMMddHHmm' format Example: 201709011230 (required)
         :param int end_utc_time: UTC time in 'yyyyMMddHHmm' format Example: 201709020130 (required)
         :param int page_index: Response to status query is paginated. Each page has a size of 10, meaning it holds the details of 10 ACKs. The pageIndex is the page number from which ACKs are to be fetched. It can be an integer between 1 and n, where n is the number of pages available.  For example: Suppose the status query returns 68 ACKs. There will be 7 pages available. pageIndex in this case can be from 1 to 7 (required)
+        :param str order_id: Unique identifier for the order generated in response to the send-SMS request. Example: 1702926297
         :param str status: Status of the messages to be fetched.  Value meanings: 'all' - All Acks are fetched 'nok' - all errors are fetched 'SENT' - all ACKs with status as 'SENT' are fetched 'DELIVERED' -  all ACKs with status as 'DELIVERED' are fetched 'RECEIVED' - all ACKs with status as 'RECEIVED' are fetched
         :param _preload_content: if False, the urllib3.HTTPResponse object will
                                  be returned without reading/decoding response
@@ -208,6 +209,7 @@ class SMSV20Api(object):
         :param int start_utc_time: UTC time in 'yyyyMMddHHmm' format Example: 201709011230 (required)
         :param int end_utc_time: UTC time in 'yyyyMMddHHmm' format Example: 201709020130 (required)
         :param int page_index: Response to status query is paginated. Each page has a size of 10, meaning it holds the details of 10 ACKs. The pageIndex is the page number from which ACKs are to be fetched. It can be an integer between 1 and n, where n is the number of pages available.  For example: Suppose the status query returns 68 ACKs. There will be 7 pages available. pageIndex in this case can be from 1 to 7 (required)
+        :param str order_id: Unique identifier for the order generated in response to the send-SMS request. Example: 1702926297
         :param str status: Status of the messages to be fetched.  Value meanings: 'all' - All Acks are fetched 'nok' - all errors are fetched 'SENT' - all ACKs with status as 'SENT' are fetched 'DELIVERED' -  all ACKs with status as 'DELIVERED' are fetched 'RECEIVED' - all ACKs with status as 'RECEIVED' are fetched
         :param _return_http_data_only: response data without head status code
                                        and headers
@@ -225,7 +227,7 @@ class SMSV20Api(object):
 
         local_var_params = locals()
 
-        all_params = ['start_utc_time', 'end_utc_time', 'page_index', 'status']  # noqa: E501
+        all_params = ['start_utc_time', 'end_utc_time', 'page_index', 'order_id', 'status']  # noqa: E501
         all_params.append('async_req')
         all_params.append('_return_http_data_only')
         all_params.append('_preload_content')
@@ -259,6 +261,8 @@ class SMSV20Api(object):
         path_params = {}
 
         query_params = []
+        if 'order_id' in local_var_params and local_var_params['order_id'] is not None:  # noqa: E501
+            query_params.append(('orderId', local_var_params['order_id']))  # noqa: E501
         if 'start_utc_time' in local_var_params and local_var_params['start_utc_time'] is not None:  # noqa: E501
             query_params.append(('startUTCTime', local_var_params['start_utc_time']))  # noqa: E501
         if 'end_utc_time' in local_var_params and local_var_params['end_utc_time'] is not None:  # noqa: E501

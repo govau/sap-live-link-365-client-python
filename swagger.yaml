@@ -996,6 +996,13 @@ paths:
       description: Pull historical data on MT (Mobile Terminated) message delivery statuses from messages that were sent within a specific time frame.
       operationId: queryStatusUsingGET_1
       parameters:
+        - name: orderId
+          in: query
+          description: |-
+            Unique identifier for the order generated in response to the send-SMS request.
+            Example: 1702926297
+          required: false
+          type: string
         - name: startUTCTime
           in: query
           description: |-
