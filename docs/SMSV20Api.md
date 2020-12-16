@@ -4,9 +4,9 @@ All URIs are relative to *https://livelink.sapmobileservices.com/api*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**query_mo_using_get1**](SMSV20Api.md#query_mo_using_get1) | **GET** /v2/sms/mo | Poll MO (Mobile Originated) Responses
-[**query_status_using_get1**](SMSV20Api.md#query_status_using_get1) | **GET** /v2/sms/status | Poll SMS delivery statuses
-[**send_sms_using_post**](SMSV20Api.md#send_sms_using_post) | **POST** /v2/sms | Send SMS message
+[**query_mo_using_get1**](SMSV20Api.md#query_mo_using_get1) | **GET** /sms/mo | Poll MO (Mobile Originated) Responses
+[**query_status_using_get1**](SMSV20Api.md#query_status_using_get1) | **GET** /sms/status | Poll SMS delivery statuses
+[**send_sms_using_post**](SMSV20Api.md#send_sms_using_post) | **POST** /sms | Send SMS message
 
 
 # **query_mo_using_get1**

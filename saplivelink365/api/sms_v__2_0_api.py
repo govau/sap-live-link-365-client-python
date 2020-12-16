@@ -152,7 +152,7 @@ class SMSV20Api(object):
         auth_settings = ['OAuth2']  # noqa: E501
 
         return self.api_client.call_api(
-            '/v2/sms/mo', 'GET',
+            '/sms/mo', 'GET',
             path_params,
             query_params,
             header_params,
@@ -286,7 +286,7 @@ class SMSV20Api(object):
         auth_settings = ['OAuth2']  # noqa: E501
 
         return self.api_client.call_api(
-            '/v2/sms/status', 'GET',
+            '/sms/status', 'GET',
             path_params,
             query_params,
             header_params,
@@ -398,7 +398,7 @@ class SMSV20Api(object):
         auth_settings = ['OAuth2']  # noqa: E501
 
         return self.api_client.call_api(
-            '/v2/sms', 'POST',
+            '/sms', 'POST',
             path_params,
             query_params,
             header_params,

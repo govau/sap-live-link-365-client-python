@@ -959,7 +959,7 @@ tags:
       description: Find out more about OAuth API
       url: https://www.oauth.com/
 paths:
-  /v2/sms:
+  /sms:
     post:
       tags:
         - SMS v. 2.0
@@ -988,7 +988,7 @@ paths:
           description: Forbidden
         "404":
           description: Not Found
-  /v2/sms/status:
+  /sms/status:
     get:
       tags:
         - SMS v. 2.0
@@ -1061,7 +1061,7 @@ paths:
           description: Forbidden
         "404":
           description: Not Found
-  /v2/sms/mo:
+  /sms/mo:
     get:
       tags:
         - SMS v. 2.0

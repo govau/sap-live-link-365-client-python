@@ -89,9 +89,9 @@ Class | Method | HTTP request | Description
 *MFAApi* | [**validate_soft_token_using_post1**](docs/MFAApi.md#validate_soft_token_using_post1) | **POST** /softTokens/validate | Validate soft token
 *MFAApi* | [**validate_token_using_post1**](docs/MFAApi.md#validate_token_using_post1) | **POST** /tokens/validate | Validates a token
 *SMSV10Api* | [**receive_sms_using_post2**](docs/SMSV10Api.md#receive_sms_using_post2) | **POST** /messages | Send SMS message
-*SMSV20Api* | [**query_mo_using_get1**](docs/SMSV20Api.md#query_mo_using_get1) | **GET** /v2/sms/mo | Poll MO (Mobile Originated) Responses
-*SMSV20Api* | [**query_status_using_get1**](docs/SMSV20Api.md#query_status_using_get1) | **GET** /v2/sms/status | Poll SMS delivery statuses
-*SMSV20Api* | [**send_sms_using_post**](docs/SMSV20Api.md#send_sms_using_post) | **POST** /v2/sms | Send SMS message
+*SMSV20Api* | [**query_mo_using_get1**](docs/SMSV20Api.md#query_mo_using_get1) | **GET** /sms/mo | Poll MO (Mobile Originated) Responses
+*SMSV20Api* | [**query_status_using_get1**](docs/SMSV20Api.md#query_status_using_get1) | **GET** /sms/status | Poll SMS delivery statuses
+*SMSV20Api* | [**send_sms_using_post**](docs/SMSV20Api.md#send_sms_using_post) | **POST** /sms | Send SMS message
 
 
 ## Documentation For Models
