@@ -18,7 +18,7 @@ securityDefinitions:
       livelink:api: Grants access to interface with API endpoints
       livelink:pollData: Grants read access to poll delivery statuses and MOs
 security:
-  - OAuth2:
+  - BasicAuth:
       - livelink:api
       - livelink:pollData
 x-sap-shortText: Leverage SAP Live Link 365's APIs to communicate around the globe, and to add a layer of security to your services.

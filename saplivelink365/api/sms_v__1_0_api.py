@@ -131,7 +131,7 @@ class SMSV10Api(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/messages', 'POST',

@@ -243,7 +243,7 @@ class AuthorizationApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/oauth/token/validate', 'POST',

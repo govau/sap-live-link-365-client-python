@@ -131,7 +131,7 @@ class MFAApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/softTokens/deactivate', 'POST',
@@ -243,7 +243,7 @@ class MFAApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/tokens/generateByKey', 'POST',
@@ -355,7 +355,7 @@ class MFAApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/tokens/generate', 'POST',
@@ -467,7 +467,7 @@ class MFAApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/softTokens/register', 'POST',
@@ -579,7 +579,7 @@ class MFAApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/tokens/urlAuthorization', 'POST',
@@ -691,7 +691,7 @@ class MFAApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/softTokens/validate', 'POST',
@@ -803,7 +803,7 @@ class MFAApi(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/tokens/validate', 'POST',

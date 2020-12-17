@@ -22,7 +22,7 @@ Deactivates soft token for account
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -30,8 +30,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -59,7 +60,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 
@@ -86,7 +87,7 @@ Generate a token associated to a specific key.
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -94,8 +95,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -123,7 +125,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 
@@ -150,7 +152,7 @@ Generates a soft token to be used with a token generator app such as Google Auth
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -158,8 +160,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -187,7 +190,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 
@@ -214,7 +217,7 @@ Register a user and generate a soft token for that user which can be used in tok
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -222,8 +225,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -251,7 +255,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 
@@ -278,7 +282,7 @@ Generate a URL authorization link that will be used as a second authentication m
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -286,8 +290,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -315,7 +320,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 
@@ -342,7 +347,7 @@ Checks the validity of a soft token for a given user.
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -350,8 +355,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -379,7 +385,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 
@@ -406,7 +412,7 @@ Validates the token received as a parameter, verifying that it is still valid.
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -414,8 +420,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -443,7 +450,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 

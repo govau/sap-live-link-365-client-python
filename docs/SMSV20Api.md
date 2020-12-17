@@ -18,7 +18,7 @@ Pull historical data on MO (Mobile Originated) incoming replies that were receiv
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -26,8 +26,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -61,7 +62,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 
@@ -87,7 +88,7 @@ Pull historical data on MT (Mobile Terminated) message delivery statuses from me
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -95,8 +96,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -132,7 +134,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 
@@ -158,7 +160,7 @@ Send an MT (Mobile Terminated) SMS message to one or more handset devices specif
 
 ### Example
 
-* OAuth Authentication (OAuth2):
+* Basic Authentication (BasicAuth):
 ```python
 from __future__ import print_function
 import time
@@ -166,8 +168,9 @@ import saplivelink365
 from saplivelink365.rest import ApiException
 from pprint import pprint
 configuration = saplivelink365.Configuration()
-# Configure OAuth2 access token for authorization: OAuth2
-configuration.access_token = 'YOUR_ACCESS_TOKEN'
+# Configure HTTP basic authorization: BasicAuth
+configuration.username = 'YOUR_USERNAME'
+configuration.password = 'YOUR_PASSWORD'
 
 # Defining host is optional and default to https://livelink.sapmobileservices.com/api
 configuration.host = "https://livelink.sapmobileservices.com/api"
@@ -195,7 +198,7 @@ Name | Type | Description  | Notes
 
 ### Authorization
 
-[OAuth2](../README.md#OAuth2)
+[BasicAuth](../README.md#BasicAuth)
 
 ### HTTP request headers
 

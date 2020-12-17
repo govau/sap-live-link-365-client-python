@@ -149,7 +149,7 @@ class SMSV20Api(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/sms/mo', 'GET',
@@ -283,7 +283,7 @@ class SMSV20Api(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/sms/status', 'GET',
@@ -395,7 +395,7 @@ class SMSV20Api(object):
             ['application/json'])  # noqa: E501
 
         # Authentication setting
-        auth_settings = ['OAuth2']  # noqa: E501
+        auth_settings = ['BasicAuth']  # noqa: E501
 
         return self.api_client.call_api(
             '/sms', 'POST',
